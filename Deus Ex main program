@@ -1,0 +1,201 @@
+
+
+#include <iostream>
+#include <Windows.h>
+
+
+int main()
+{
+	HWND h = FindWindowA(NULL, "Deus Ex: Human Revolution");
+	if (h != NULL)
+		printf("found window.\n");
+	else
+		printf("could not find window.\n");
+
+	DWORD pid;
+	DWORD p = GetWindowThreadProcessId(h, &pid);
+	if (p != NULL)
+		printf("got process Id.\n");
+	else
+		printf("could not get proc Id.\n");
+
+	HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+
+	if (handle != NULL)
+		printf("got handle ..\n");
+	else
+		printf("could not get handle.\n");
+
+	DWORD base = 0x00e90000;
+	DWORD address1, address2, address3, address4, address5, address6, address7, address8;
+
+	address1 = base + 0x018748C8;
+
+	ReadProcessMemory(handle, (void*)address1, &address2, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address1, address2);
+
+	address2 += 0x4d8;
+
+	ReadProcessMemory(handle, (void*)address2, &address3, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address2, address3);
+
+	address3 += 0x08;
+
+	ReadProcessMemory(handle, (void*)address3, &address4, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address3, address4);
+
+	address4 += 0x0c;
+
+	ReadProcessMemory(handle, (void*)address4, &address5, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address4, address5);
+
+	address5 += 0x10;
+
+	ReadProcessMemory(handle, (void*)address5, &address6, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address5, address6);
+
+	address6 += 0x10c;
+
+	int value;
+
+	ReadProcessMemory(handle, (void*)address6, &address7, sizeof(DWORD), 0);
+	value = address7 & 0xff;
+	printf("value at 0x%x is => %d\n", address6, value);
+
+	DWORD base_Experience = 0x00e90000;
+	DWORD address_exp1, address_exp2, address_exp3, address_exp4, address_exp5, address_exp6, address_exp7;
+
+	address_exp1 = base + 0x015DE1A8;
+
+	ReadProcessMemory(handle, (void*)address_exp1, &address_exp2, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_exp1, address_exp2);
+
+	address_exp2 += 0x14;
+
+	ReadProcessMemory(handle, (void*)address_exp2, &address_exp3, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_exp2, address_exp3);
+
+	address_exp3 += 0x138;
+
+	int bonusXP = 0;
+
+	ReadProcessMemory(handle, (void*)address_exp3, &address_exp4, sizeof(DWORD), 0);
+	bonusXP = address_exp4 & 0xff;
+	printf("value at 0x%x is => %d\n", address_exp3, bonusXP);
+
+
+	DWORD base_health = 0x00e90000;
+	DWORD address_health1, address_health2, address_health3, address_health4, address_health5, address_health6, address_health7, address_health8;
+
+	address_health1 = base_health + 0x0186AD48;
+
+	ReadProcessMemory(handle, (void*)address_health1, &address_health2, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_health1, address_health2);
+
+	address_health2 += 0x5c;
+
+	ReadProcessMemory(handle, (void*)address_health2, &address_health3, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_health2, address_health3);
+
+	address_health3 += 0x64;
+
+	ReadProcessMemory(handle, (void*)address_health3, &address_health4, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_health3, address_health4);
+
+	address_health4 += 0x3c;
+
+	ReadProcessMemory(handle, (void*)address_health4, &address_health5, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_health4, address_health5);
+
+	address_health5 += 0x64;
+
+	ReadProcessMemory(handle, (void*)address_health5, &address_health6, sizeof(DWORD), 0);
+	printf("address at 0x%x is => 0x%x\n", address_health5, address_health6);
+
+	address_health6 += 0x5c;
+
+	float health;
+	ReadProcessMemory(handle, (void*)address_health6, &health, sizeof(DWORD), 0);
+	
+	printf("health at 0x%x is => %f\n", address_health6, health);
+
+	DWORD base_money = 0x00e90000;
+	DWORD address_money1, address_money2, address_money3, address_money4, address_money5, address_money6, address_money7;
+	
+	address_money1 = base + 0x0186AD48;
+
+	ReadProcessMemory(handle, (void*)address_money1, &address_money2, sizeof(DWORD), 0);
+	printf("address at 0x%x is at 0x%x\n", address_money1, address_money2);
+
+	address_money2 += 0x44;
+
+	ReadProcessMemory(handle, (void*)address_money2, &address_money3, sizeof(DWORD), 0);
+	printf("address at 0x%x is at 0x%x\n", address_money2, address_money3);
+
+	address_money3 += 0x28;
+	
+	ReadProcessMemory(handle, (void*)address_money3, &address_money4, sizeof(DWORD), 0);
+	printf("address at 0x%x is at 0x%x\n", address_money3, address_money4);
+
+	address_money4 += 0x6ec;
+
+	ReadProcessMemory(handle, (void*)address_money4, &address_money5, sizeof(DWORD), 0);
+	printf("address at 0x%x is at 0x%x\n", address_money4, address_money5);
+
+	address_money5 += 0x60;
+
+	ReadProcessMemory(handle, (void*)address_money5, &address_money6, sizeof(DWORD), 0);
+	printf("address at 0x%x is at 0x%x\n", address_money5, address_money6);
+
+	address_money6 += 0x60;
+
+	int money = 0;
+
+	ReadProcessMemory(handle, (void*)address_money6, &money, sizeof(DWORD), 0);
+	printf("money at 0x%x is at %d\n", address_money1, money);
+
+	
+
+	while (true) {
+		ReadProcessMemory(handle, (void*)address6, &address7, sizeof(DWORD), 0);
+		value = address7 & 0xff;
+		printf("ammo is now at => %d\n", value);
+		if (value == 0) {
+			value = 30;
+			WriteProcessMemory(handle, (void*)address6, &value, sizeof(DWORD), 0);
+		}
+		Sleep(500);
+		ReadProcessMemory(handle, (void*)address_exp3, &address_exp4, sizeof(DWORD), 0);
+		bonusXP = address_exp4 & 0xffff;
+		printf("experience is now at => %d\n", bonusXP);
+
+
+		
+		if (bonusXP < 10000) {
+			if ((bonusXP % 10 == 0) || (bonusXP % 5 == 0)) {
+				bonusXP += 1000;
+				WriteProcessMemory(handle, (void*)address_exp3, &bonusXP, sizeof(DWORD), 0);
+				if (bonusXP >= 10000)
+				{
+					bonusXP = 1000;
+
+				}
+			}
+		}
+
+		ReadProcessMemory(handle, (void*)address_health6, &health, sizeof(DWORD), 0);
+		printf("health is at => %f now.\n", health);
+		health = 100.00;
+		WriteProcessMemory(handle, (void*)address_health6, &health, sizeof(DWORD), 0);
+
+		ReadProcessMemory(handle, (void*)address_money6, &money, sizeof(DWORD), 0);
+		money = 100000;
+		WriteProcessMemory(handle, (void*)address_money6, &money, sizeof(DWORD), 0);
+		printf("money is at %d now .\n", money);
+	}
+
+
+	return 1;
+
+}
+
